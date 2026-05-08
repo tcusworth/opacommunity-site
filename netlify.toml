@@ -1,0 +1,30 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/join"
+  to = "https://app.opacommunity.com"
+  status = 302
+
+[[redirects]]
+  from = "/signin"
+  to = "https://app.opacommunity.com/signin"
+  status = 302
+
+[[redirects]]
+  from = "/forum"
+  to = "https://app.opacommunity.com"
+  status = 302
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

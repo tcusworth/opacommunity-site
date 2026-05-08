@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OPA Community — the independent platform for Open Process Automation</title>
+  <meta name="description" content="OPA Community is the independent platform for process automation professionals working with Open Process Automation. Vendor-neutral. Free to join." />
+
+  <meta property="og:title" content="OPA Community" />
+  <meta property="og:description" content="The independent platform for Open Process Automation. Vendor-neutral. Free to join." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://opacommunity.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="canonical" href="https://opacommunity.com/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "e2d933ef68d54b818f5507a15d8ab0ca"}'></script>
+
+  <style>
+    /* ── tokens ─────────────────────────────────────────────────────── */
+    :root{
+      --paper:        #faf7f1;
+      --paper-2:      #f3efe5;
+      --paper-3:      #ebe5d6;
+      --rule:         #1d1f240f;     /* hairline */
+      --rule-2:       #1d1f2419;
+      --rule-3:       #1d1f2433;
+      --ink-950:      #0d0f12;
+      --ink-900:      #15171d;
+      --ink-700:      #2c2f37;
+      --ink-500:      #5a5f6b;
+      --ink-400:      #7a808d;
+      --ink-300:      #a8aebc;
+
+      --accent:       #D85B1F;
+      --accent-on:    #ffffff;
+
+      --max:          1240px;
+      --pad:          32px;
+
+      --sans:         "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --serif:        "IBM Plex Serif", ui-serif, Georgia, "Iowan Old Style", serif;
+      --mono:         "JetBrains Mono", ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, monospace;
+
+      --display:      var(--sans);
+
+      --t-h1:         clamp(44px, 6.4vw, 88px);
+      --t-h2:         clamp(32px, 4vw, 52px);
+      --t-h3:         22px;
+      --t-body:       17px;
+      --t-lead:       19px;
+      --t-mono:       12px;
+
+      --line-tight:   1.05;
+      --line-normal:  1.55;
+
+      --r-sm:         3px;
+      --r-md:         6px;
+      --r-lg:         10px;
+
+      --sect-pad:     112px;
+    }
+
+    /* density */
+    body[data-density="dense"]   { --sect-pad: 80px;  }
+    body[data-density="regular"] { --sect-pad: 112px; }
+    body[data-density="roomy"]   { --sect-pad: 144px; }
+
+    /* display font */
+    body[data-display="serif"] { --display: var(--serif); }
+
+    /* dark */
+    body[data-theme="dark"]{
+      --paper:    #0e0f12;
+      --paper-2:  #14161b;
+      --paper-3:  #1c1f25;
+      --rule:     #ffffff14;
+      --rule-2:   #ffffff22;
+      --rule-3:   #ffffff38;
+      --ink-950:  #f7f4ec;
+      --ink-900:  #ebe7dc;
+      --ink-700:  #c4c0b3;
+      --ink-500:  #8e8a7e;
+      --ink-400:  #6e6b62;
+      --ink-300:  #4d4a44;
+    }
+
+    /* ── base ───────────────────────────────────────────────────────── */
+    *,*::before,*::after{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
+    body{
+      background:var(--paper);
+      color:var(--ink-900);
+      font-family:var(--sans);
+      font-size:var(--t-body);
+      line-height:var(--line-normal);
+      font-feature-settings:"ss01","cv11";
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
+    p{ margin:0 0 1em; max-width:64ch; }
+    h1,h2,h3{ margin:0; font-family:var(--display); font-weight:600; letter-spacing:-0.02em; }
+    code{ font-family:var(--mono); font-size:.9em; }
+    img{ display:block; max-width:100%; }
+    button{ font:inherit; }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
+
+    /* ── monospace flourishes ──────────────────────────────────────── */
+    .mono-tag{
+      font-family:var(--mono);
+      font-size:12.5px;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      color:var(--ink-700);
+      font-weight:500;
+    }
+    .mono-tag.tiny{ font-size:12px; }
+    .mono-tag.muted{ color:var(--ink-500); }
+    .mono-sep{ font-family:var(--mono); color:var(--ink-300); margin:0 6px; }
+    .arrow{ display:inline-block; transition:transform .2s ease; }
+    a:hover .arrow{ transform:translateX(2px); }
+
+    /* ── header ────────────────────────────────────────────────────── */
+    .site-header{
+      position:sticky; top:0; z-index:50;
+      background:color-mix(in oklab, var(--paper) 88%, transparent);
+      backdrop-filter:saturate(140%) blur(10px);
+      -webkit-backdrop-filter:saturate(140%) blur(10px);
+      border-bottom:1px solid var(--rule);
+    }
+    .header-wrap{
+      display:flex; align-items:center; gap:32px;
+      height:64px;
+    }
+    .wordmark{
+      display:inline-flex; align-items:baseline; gap:2px;
+      font-family:var(--display);
+      font-weight:700;
+      font-size:18px;
+      letter-spacing:-0.01em;
+      color:var(--ink-950);
+      white-space:nowrap;
+    }
+    .wordmark:hover{ text-decoration:none; }
+    .wm-bracket{ color:var(--accent); font-weight:500; }
+    .wm-name{ display:inline-flex; align-items:baseline; }
+    .wm-sep{ color:var(--ink-300); margin:0 4px; font-weight:400; }
+    .wordmark.sm{ font-size:15px; }
+
+    .primary-nav{
+      display:flex; gap:22px;
+      margin-left:8px;
+      font-size:15px;
+      font-weight:500;
+      color:var(--ink-700);
+    }
+    .primary-nav a{ padding:6px 0; }
+    .primary-nav a:hover{ color:var(--ink-950); text-decoration:none; }
+
+    .header-cta{
+      margin-left:auto;
+      display:flex; align-items:center; gap:14px;
+    }
+    .textlink{ font-size:15px; font-weight:500; color:var(--ink-700); }
+    .textlink:hover{ color:var(--ink-950); }
+
+    /* ── buttons ───────────────────────────────────────────────────── */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      font-family:var(--sans);
+      font-weight:500;
+      font-size:14px;
+      letter-spacing:-0.005em;
+      padding:9px 16px;
+      border-radius:var(--r-md);
+      border:1px solid transparent;
+      cursor:pointer;
+      transition:transform .12s ease, background .18s ease, border-color .18s ease, color .18s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ text-decoration:none; }
+    .btn:active{ transform:scale(.98); }
+    .btn-primary{
+      background:var(--accent); color:var(--accent-on);
+      border-color:color-mix(in oklab, var(--accent) 80%, #000 20%);
+    }
+    .btn-primary:hover{
+      background:color-mix(in oklab, var(--accent) 88%, #000 12%);
+    }
+    .btn-ghost{
+      background:transparent; color:var(--ink-900);
+      border-color:var(--rule-3);
+    }
+    .btn-ghost:hover{
+      background:var(--paper-2);
+    }
+    .btn-lg{ padding:12px 22px; font-size:15px; }
+    .btn-sm{ padding:7px 12px; font-size:13px; }
+
+    /* ── hero ──────────────────────────────────────────────────────── */
+    .hero{
+      padding:72px 0 var(--sect-pad);
+      border-bottom:1px solid var(--rule);
+      position:relative;
+    }
+    body[data-density="dense"] .hero{ padding-top:48px; }
+
+    .hero-wrap{ display:flex; flex-direction:column; gap:28px; }
+    body[data-density="dense"] .hero-wrap{ gap:22px; }
+    body[data-density="roomy"] .hero-wrap{ gap:34px; }
+
+    .hero-eyebrow{
+      display:flex; align-items:center; gap:6px;
+      flex-wrap:wrap;
+    }
+    .hero-h{
+      font-size:var(--t-h1);
+      line-height:var(--line-tight);
+      font-weight:600;
+      max-width:18ch;
+      letter-spacing:-0.025em;
+    }
+    body[data-display="serif"] .hero-h{ font-weight:500; letter-spacing:-0.02em; }
+    .hero-line{ display:block; }
+    .hero-line.accent{ color:var(--accent); }
+    body[data-theme="dark"] .hero-line.accent{
+      color:color-mix(in oklab, var(--accent) 75%, #fff 25%);
+    }
+
+    .hero-sub{
+      font-size:var(--t-lead);
+      line-height:1.5;
+      color:var(--ink-700);
+      max-width:54ch;
+      margin:0;
+    }
+
+    .hero-actions{
+      display:flex; align-items:center; gap:14px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .hero-meta{
+      display:flex; flex-wrap:wrap; gap:0;
+      margin-top:48px;
+      padding-top:18px;
+      border-top:1px solid var(--rule);
+      font-family:var(--mono);
+      font-size:13px;
+      color:var(--ink-500);
+    }
+    .meta-item{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:0 18px 0 0;
+      margin-right:18px;
+      border-right:1px solid var(--rule-2);
+      letter-spacing:.02em;
+    }
+    .meta-item:last-child{ border-right:0; margin-right:0; padding-right:0; }
+    .meta-item code{
+      font-size:12.5px; padding:2px 6px;
+      background:var(--paper-2); border:1px solid var(--rule-2);
+      border-radius:3px; color:var(--ink-700);
+    }
+    .dot{
+      width:7px; height:7px; border-radius:99px;
+      background:var(--accent);
+      box-shadow:0 0 0 3px color-mix(in oklab, var(--accent) 22%, transparent);
+    }
+
+    /* ── section heads ─────────────────────────────────────────────── */
+    .section-head{
+      display:flex; flex-direction:column; gap:14px;
+      margin-bottom:48px;
+      max-width:62ch;
+    }
+    .section-h{
+      font-size:var(--t-h2);
+      line-height:1.05;
+      font-weight:600;
+      letter-spacing:-0.02em;
+    }
+    body[data-display="serif"] .section-h{ font-weight:500; }
+    .section-sub{
+      font-size:var(--t-lead);
+      color:var(--ink-700);
+      margin:0;
+      max-width:50ch;
+    }
+
+    /* ── inside / feature grid ─────────────────────────────────────── */
+    .inside{ padding:var(--sect-pad) 0; }
+
+    .feat-grid{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:0;
+      border-top:1px solid var(--rule-2);
+      border-left:1px solid var(--rule-2);
+    }
+    body[data-density="dense"] .feat{ padding:24px 22px 22px; min-height:240px; }
+    body[data-density="roomy"] .feat{ padding:42px 36px 36px; min-height:320px; }
+
+    .feat{
+      padding:32px 28px 28px;
+      border-right:1px solid var(--rule-2);
+      border-bottom:1px solid var(--rule-2);
+      background:var(--paper);
+      display:flex; flex-direction:column; gap:14px;
+      min-height:280px;
+      transition:background .2s ease;
+      position:relative;
+    }
+    .feat:hover{ background:var(--paper-2); }
+    .feat-h{
+      display:flex; align-items:center; gap:14px;
+    }
+    .feat-num{
+      font-family:var(--mono);
+      font-size:14px;
+      font-weight:500;
+      color:var(--accent);
+      letter-spacing:.05em;
+    }
+    .feat-icon{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:32px; height:32px;
+      border:1px solid var(--rule-3);
+      border-radius:var(--r-sm);
+      color:var(--accent);
+    }
+    .feat-rule{
+      display:inline-block; width:24px; height:2px;
+      background:var(--accent);
+    }
+    .feat-title{
+      font-size:var(--t-h3);
+      font-weight:600;
+      letter-spacing:-0.01em;
+      line-height:1.2;
+    }
+    .feat-blurb{
+      font-size:16px;
+      color:var(--ink-700);
+      line-height:1.55;
+      margin:0;
+      max-width:36ch;
+    }
+    .feat-foot{
+      margin-top:auto;
+      padding-top:14px;
+      border-top:1px dashed var(--rule-2);
+    }
+
+    /* ── manifesto ─────────────────────────────────────────────────── */
+    .manifesto{
+      padding:var(--sect-pad) 0;
+      background:var(--paper-2);
+      border-top:1px solid var(--rule);
+      border-bottom:1px solid var(--rule);
+    }
+    .manifesto-grid{
+      display:grid;
+      grid-template-columns:240px 1fr;
+      gap:64px;
+    }
+    .manifesto-side{
+      display:flex; flex-direction:column; gap:20px;
+      position:sticky; top:96px; align-self:start;
+    }
+    .side-label{
+      font-family:var(--display);
+      font-size:36px;
+      line-height:1;
+      font-weight:600;
+      letter-spacing:-0.02em;
+    }
+    body[data-display="serif"] .side-label{ font-weight:500; font-style:italic; }
+    .side-meta{
+      font-family:var(--mono);
+      font-size:12.5px;
+      color:var(--ink-500);
+      display:flex; flex-direction:column; gap:6px;
+      padding-top:18px;
+      border-top:1px solid var(--rule-2);
+    }
+    .manifesto-body{ max-width:62ch; }
+
+    .pullquote{
+      margin:0 0 36px;
+      padding:0 0 0 28px;
+      border-left:2px solid var(--accent);
+      position:relative;
+    }
+    .pullquote .pq-mark{
+      position:absolute; left:-2px; top:-22px;
+      font-family:var(--serif);
+      font-size:64px; line-height:1;
+      color:var(--accent);
+      font-weight:600;
+    }
+    .pullquote p{
+      font-family:var(--display);
+      font-size:clamp(22px, 2.2vw, 30px);
+      line-height:1.32;
+      letter-spacing:-0.012em;
+      font-weight:500;
+      color:var(--ink-900);
+      margin:0;
+      max-width:none;
+    }
+    body[data-display="serif"] .pullquote p{ font-style:normal; font-weight:400; }
+    .pullquote em{ font-style:italic; color:var(--ink-700); }
+
+    .manifesto-body .lede{
+      font-size:18px;
+      color:var(--ink-900);
+      font-weight:500;
+    }
+    .manifesto-body p{
+      font-size:16.5px;
+      color:var(--ink-700);
+      line-height:1.65;
+    }
+    .closer{
+      margin-top:32px;
+      padding-top:24px;
+      display:flex; align-items:center; gap:14px;
+      font-family:var(--display);
+      font-size:20px;
+      font-weight:500;
+      color:var(--ink-900);
+      max-width:none;
+    }
+    .closer-rule{
+      display:inline-block;
+      width:32px; height:1px;
+      background:var(--ink-900);
+    }
+
+    /* ── principles strip ──────────────────────────────────────────── */
+    .principles{
+      padding:0;
+      border-bottom:1px solid var(--rule);
+    }
+    .prin-strip{
+      display:grid; grid-template-columns:repeat(4, 1fr);
+      border-top:1px solid var(--rule);
+    }
+    .prin{
+      padding:36px 28px;
+      border-right:1px solid var(--rule-2);
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .prin:last-child{ border-right:0; }
+    .prin-k{
+      font-family:var(--mono);
+      font-size:12.5px;
+      color:var(--ink-400);
+    }
+    .prin-t{
+      font-family:var(--mono);
+      font-weight:600;
+      font-size:14px;
+      letter-spacing:.06em;
+      color:var(--ink-950);
+    }
+    .prin:nth-child(1) .prin-t,
+    .prin:nth-child(3) .prin-t{ color:var(--accent); }
+    body[data-theme="dark"] .prin:nth-child(1) .prin-t,
+    body[data-theme="dark"] .prin:nth-child(3) .prin-t{
+      color:color-mix(in oklab, var(--accent) 75%, #fff 25%);
+    }
+    .prin-d{
+      font-size:14.5px;
+      color:var(--ink-500);
+      line-height:1.5;
+    }
+
+    /* ── cta ───────────────────────────────────────────────────────── */
+    .cta{
+      padding:calc(var(--sect-pad) + 24px) 0;
+      text-align:left;
+      background:var(--paper);
+    }
+    .cta-wrap{
+      display:flex; flex-direction:column; gap:16px;
+      max-width:720px; margin:0 auto;
+      text-align:center; align-items:center;
+    }
+    .cta-h{
+      font-size:clamp(40px, 5vw, 64px);
+      font-weight:600;
+      letter-spacing:-0.025em;
+      line-height:1.05;
+      margin-top:6px;
+    }
+    body[data-display="serif"] .cta-h{ font-weight:500; }
+    .cta-sub{
+      font-size:var(--t-lead);
+      color:var(--ink-700);
+      margin:0;
+      max-width:50ch;
+    }
+    .cta-actions{
+      display:flex; gap:14px; flex-wrap:wrap; justify-content:center;
+      margin-top:14px;
+    }
+    .cta-meta{ margin-top:18px; }
+
+    /* ── footer ────────────────────────────────────────────────────── */
+    .site-footer{
+      background:var(--paper-2);
+      border-top:1px solid var(--rule);
+      padding:64px 0 24px;
+      font-size:14px;
+    }
+    .footer-grid{
+      display:grid; grid-template-columns:1.2fr 1fr 1.4fr;
+      gap:48px;
+      padding-bottom:48px;
+      border-bottom:1px solid var(--rule-2);
+    }
+    .foot-brand .wordmark{ font-size:18px; }
+    .foot-tag{
+      font-size:14px;
+      color:var(--ink-700);
+      margin:18px 0 22px;
+      max-width:24ch;
+      line-height:1.5;
+    }
+    .foot-contact{ margin:0; font-size:14px; line-height:1.6; }
+    .foot-contact a{ color:var(--accent); }
+    body[data-theme="dark"] .foot-contact a{
+      color:color-mix(in oklab, var(--accent) 70%, #fff 30%);
+    }
+
+    .foot-nav{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .foot-nav a{ color:var(--ink-700); }
+    .foot-nav a:hover{ color:var(--ink-950); }
+    .foot-nav .mono-tag{ margin-bottom:4px; }
+
+    .foot-news .news-blurb{
+      font-size:14.5px; color:var(--ink-700); line-height:1.55;
+      margin:8px 0 14px; max-width:42ch;
+    }
+    .news-form{
+      display:flex; gap:8px;
+      max-width:380px;
+    }
+    .news-form .hp-field{
+      position:absolute; left:-9999px; top:-9999px;
+      width:1px; height:1px; overflow:hidden;
+    }
+    .news-form input{
+      flex:1; min-width:0;
+      padding:9px 12px;
+      font:inherit; font-size:14px;
+      border:1px solid var(--rule-3);
+      border-radius:var(--r-md);
+      background:var(--paper);
+      color:var(--ink-900);
+    }
+    .news-form input:focus{
+      outline:none;
+      border-color:var(--accent);
+      box-shadow:0 0 0 3px color-mix(in oklab, var(--accent) 22%, transparent);
+    }
+
+    .foot-bottom{
+      padding-top:24px;
+      display:flex; justify-content:space-between; align-items:center;
+      gap:24px; flex-wrap:wrap;
+      font-size:13.5px;
+      color:var(--ink-500);
+    }
+    .foot-bot-mid{ flex:1; text-align:center; }
+
+    /* ── tweaks panel chrome from starter; small extras ────────────── */
+    .twk-help{
+      font-family:var(--mono);
+      font-size:10.5px;
+      color:rgba(41,38,27,.55);
+      line-height:1.5;
+      margin-top:-2px;
+      padding:0 2px;
+    }
+
+    /* ── responsive ────────────────────────────────────────────────── */
+    @media (max-width: 960px){
+      :root{ --sect-pad:80px; --pad:24px; }
+      .feat-grid{ grid-template-columns:repeat(2, 1fr); }
+      .prin-strip{ grid-template-columns:repeat(2, 1fr); }
+      .prin:nth-child(2){ border-right:0; }
+      .prin:nth-child(1), .prin:nth-child(2){ border-bottom:1px solid var(--rule-2); }
+      .manifesto-grid{ grid-template-columns:1fr; gap:40px; }
+      .manifesto-side{ position:static; }
+      .footer-grid{ grid-template-columns:1fr 1fr; }
+      .foot-news{ grid-column:1 / -1; }
+    }
+    @media (max-width: 720px){
+      .header-wrap{ height:56px; gap:16px; }
+      .primary-nav{ display:none; }
+      .hero{ padding-top:48px; }
+      .feat-grid{ grid-template-columns:1fr; }
+      .prin-strip{ grid-template-columns:1fr; }
+      .prin{ border-right:0; border-bottom:1px solid var(--rule-2); }
+      .prin:last-child{ border-bottom:0; }
+      .footer-grid{ grid-template-columns:1fr; gap:36px; }
+      .foot-bot-mid{ flex:none; text-align:left; width:100%; order:3; }
+      .meta-item{ margin-right:12px; padding-right:12px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; }
+      html{ scroll-behavior:auto; }
+    }
+  </style>
+
+</head>
+<body data-theme="light" data-density="dense" data-displayfont="sans">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-wrap">
+      <a href="#top" class="wordmark" aria-label="OPA Community home">
+        <span class="wm-bracket">[</span>
+        <span class="wm-name">OPA<span class="wm-sep">·</span>Community</span>
+        <span class="wm-bracket">]</span>
+      </a>
+      <nav class="primary-nav" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#inside">What's inside</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="header-cta">
+        <a href="https://app.opacommunity.com/signin" class="textlink">Sign in</a>
+        <a href="https://app.opacommunity.com" class="btn btn-primary">Join free</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section id="top" class="hero">
+      <div class="wrap hero-wrap">
+        <div class="hero-eyebrow">
+          <span class="mono-tag">OPA-COMMUNITY</span>
+          <span class="mono-sep">/</span>
+          <span class="mono-tag muted">independent · vendor-neutral</span>
+        </div>
+
+        <h1 class="hero-h">
+          <span class="hero-line">The independent platform</span>
+          <span class="hero-line accent">for Open Process Automation.</span>
+        </h1>
+
+        <p class="hero-sub">
+          OPA Community is the independent platform where process automation
+          professionals share what they're learning about Open Process
+          Automation — without vendor filters.
+        </p>
+
+        <div class="hero-actions">
+          <a href="https://app.opacommunity.com" class="btn btn-primary btn-lg">
+            Join the community — free
+          </a>
+          <a href="#about" class="btn btn-ghost">
+            Read the principles <span class="arrow">→</span>
+          </a>
+        </div>
+
+        <div class="hero-meta">
+          <span class="meta-item"><span class="dot"></span> v1.0</span>
+          <span class="meta-item">Est. 2026</span>
+          <span class="meta-item">42 founding members</span>
+          <span class="meta-item meta-spec">conforms to <code>O-PAS™ v2.1</code></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="inside" class="inside">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="section-h">What's inside</h2>
+          <p class="section-sub">
+            Four surfaces. One community. Free to join, free to use.
+          </p>
+        </div>
+        <div class="feat-grid" data-density>
+          <article class="feat">
+            <header class="feat-h">
+              <span class="feat-num">01</span>
+              <h3 class="feat-title">The Forum</h3>
+            </header>
+            <p class="feat-blurb">Threaded discussion among practitioners. Real questions, real answers, no vendor pitches.</p>
+            <div class="feat-foot">
+              <span class="mono-tag tiny muted">lightly moderated · vendor-neutral</span>
+            </div>
+          </article>
+          <article class="feat">
+            <header class="feat-h">
+              <span class="feat-num">02</span>
+              <h3 class="feat-title">The Courses</h3>
+            </header>
+            <p class="feat-blurb">Free, structured courses on Open Process Automation. O-PAS Fundamentals available now.</p>
+            <div class="feat-foot">
+              <span class="mono-tag tiny muted">video-led · ends with knowledge check</span>
+            </div>
+          </article>
+          <article class="feat">
+            <header class="feat-h">
+              <span class="feat-num">03</span>
+              <h3 class="feat-title">The AI Assistant</h3>
+            </header>
+            <p class="feat-blurb">Trained on the O-PAS standards and community documentation. Grounded answers, not chatbot guesses.</p>
+            <div class="feat-foot">
+              <span class="mono-tag tiny muted">scoped to O-PAS™ v2.1 + community docs</span>
+            </div>
+          </article>
+          <article class="feat">
+            <header class="feat-h">
+              <span class="feat-num">04</span>
+              <h3 class="feat-title">The Tools</h3>
+            </header>
+            <p class="feat-blurb">Architecture Builder, Migration Planner, Procurement Generator, ROI Calculator. All vendor-neutral.</p>
+            <div class="feat-foot">
+              <span class="mono-tag tiny muted">free · no leads sold</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="manifesto">
+      <div class="wrap manifesto-grid">
+        <aside class="manifesto-side">
+          <div class="side-label">Why this<br/>exists</div>
+          <div class="side-meta">
+            <div><span class="mono-tag tiny muted">filed</span> 2026-01</div>
+            <div><span class="mono-tag tiny muted">authors</span> the community</div>
+          </div>
+        </aside>
+        <div class="manifesto-body">
+          <blockquote class="pullquote">
+            <span class="pq-mark" aria-hidden="true">&ldquo;</span>
+            <p>
+              The pattern in industrial automation is the same every cycle: a
+              vendor proposes a <em>"next generation"</em> platform, an operator
+              pays a fortune to migrate, ten years later they're locked in worse
+              than before.
+            </p>
+          </blockquote>
+
+          <p class="lede">
+            Open Process Automation is the first serious attempt to break that
+            pattern — and it's working, in real plants, right now.
+          </p>
+
+          <p>
+            But the people who could benefit from it most don't have a place to
+            talk to each other. Their conferences are dominated by vendor
+            sponsorships. Published material is either confidential or markety.
+            The questions they actually have go unanswered because there's
+            nowhere to ask.
+          </p>
+
+          <p class="closer">
+            <span class="closer-rule" aria-hidden="true"></span>
+            OPA Community exists to be that place.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="principles">
+      <div class="wrap">
+        <div class="prin-strip">
+          <div class="prin">
+            <span class="prin-k">01</span>
+            <span class="prin-t">VENDOR-NEUTRAL</span>
+            <span class="prin-d">No ads. No sponsored content. No paid placement.</span>
+          </div>
+          <div class="prin">
+            <span class="prin-k">02</span>
+            <span class="prin-t">PRACTITIONER-LED</span>
+            <span class="prin-d">Conversations between people doing the work.</span>
+          </div>
+          <div class="prin">
+            <span class="prin-k">03</span>
+            <span class="prin-t">FREE TO JOIN</span>
+            <span class="prin-d">Always has been. Always will be.</span>
+          </div>
+          <div class="prin">
+            <span class="prin-k">04</span>
+            <span class="prin-t">OPEN BY DEFAULT</span>
+            <span class="prin-d">Discussion searchable. Courses free. Tools open.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="join" class="cta">
+      <div class="wrap cta-wrap">
+        <h2 class="cta-h">Ready to join?</h2>
+        <p class="cta-sub">
+          Free signup. No vendor emails. No paid tier. Just the work.
+        </p>
+        <div class="cta-actions">
+          <a href="https://app.opacommunity.com" class="btn btn-primary btn-lg">Join the community</a>
+          <a href="#about" class="btn btn-ghost">What we believe →</a>
+        </div>
+        <div class="cta-meta mono-tag tiny muted">
+          app.opacommunity.com · single sign-up · no credit card
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact" class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="foot-brand">
+        <div class="wordmark sm">
+          <span class="wm-bracket">[</span>
+          <span class="wm-name">OPA<span class="wm-sep">·</span>Community</span>
+          <span class="wm-bracket">]</span>
+        </div>
+        <p class="foot-tag">Built for practitioners.<br/>Vendor-neutral.</p>
+        <p class="foot-contact">
+          <span class="mono-tag tiny muted">contact</span><br/>
+          <a href="mailto:info@opacommunity.com">info@opacommunity.com</a>
+        </p>
+      </div>
+
+      <div class="foot-nav">
+        <span class="mono-tag tiny muted">site</span>
+        <a href="#about">About</a>
+        <a href="#inside">What's inside</a>
+        <a href="https://app.opacommunity.com">Forum</a>
+        <a href="#contact">Contact</a>
+        <a href="https://app.opacommunity.com/signin">Sign in →</a>
+      </div>
+
+      <div class="foot-news">
+        <span class="mono-tag tiny muted">monthly dispatch</span>
+        <p class="news-blurb">
+          One email a month. New courses, notable forum threads, OPA news from
+          the field. Unsubscribe anytime.
+        </p>
+        <form class="news-form" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?subscribed=1">
+          <input type="hidden" name="form-name" value="newsletter" />
+          <p class="hp-field" aria-hidden="true"><label>Don't fill this out: <input name="bot-field" /></label></p>
+          <input type="email" name="email" required placeholder="you@plant.example" aria-label="email" />
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="wrap foot-bottom">
+      <span>© 2026 OPA Community.</span>
+      <span class="foot-bot-mid mono-tag tiny muted">
+        opacommunity.com · not affiliated with any vendor or consortium
+      </span>
+      <span class="mono-tag tiny muted">v1.0 · 2026-05</span>
+    </div>
+  </footer>
+
+  <style>
+    /* Production-only additions */
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+    }
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+      background: var(--ink-900);
+      color: var(--paper);
+      padding: 0.5rem 1rem;
+      z-index: 9999;
+      text-decoration: none;
+    }
+  </style>
+</body>
+</html>
